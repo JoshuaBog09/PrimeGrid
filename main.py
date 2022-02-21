@@ -125,8 +125,8 @@ def main():
                 break
 
             drawPrimeGrid(draw_coordinates[index-1], draw_coordinates[index], prime[index], GRID_SIZE)
-
-        run_state = exit()
+        if run_state:
+            run_state = exit()
 
 if __name__ == "__main__":
     pg.init()
