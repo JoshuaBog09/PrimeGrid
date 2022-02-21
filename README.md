@@ -1,4 +1,4 @@
-# PrimeGrid - Python
+# PrimeGrid and PrimeSpiral- Python
 
 This project was inspired by the recent video of Daniel Shiffman (The Coding Train) named The Prime Spiral (Coding Challenge 167). This project was written entirely in python including external libaries for graphics(Pygame) and arrays(NumPy).
 
