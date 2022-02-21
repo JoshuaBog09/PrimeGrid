@@ -1,7 +1,13 @@
 import pygame as pg
 import numpy as np
 
-GRID_SIZE = int(input("Input a gride size>"))
+TYPES = ["spiral","grid"]
+
+GRID_SIZE = int(input("Input a gride size. > "))
+TYPE = str(input("Visualization as grid or spiral? > "))
+if TYPE.lower().strip() not in TYPES:
+    TYPE = "spiral"
+    print("Unrecognised input, visualization set to default(spiral).")
 
 WHITE = (244, 243, 239)
 BLACK = (16, 16, 16)
@@ -16,7 +22,7 @@ SCREEN.fill(BLACK)
 
 FPS = 60
 
-pg.display.set_caption("PrimeGrid")
+pg.display.set_caption(f"Prime{TYPE.title().strip()}")
 
 
 def primesfrom2to(n):
@@ -32,6 +38,7 @@ def primesfrom2to(n):
 def genPrimeGrid(size: int):
     if size % 2 == 0:
         size += 1
+    
     grid = np.zeros(shape=(size,size))
 
     center = (size//2, size//2)
@@ -81,7 +88,17 @@ def genPrimeGrid(size: int):
     return pattern_draw, pattern_prime
 
 
-def drawPrimeGrid(previous_node, current_node, prime_state, grid_size):
+def drawPrimeGrid(current_node, prime_state, grid_size):
+    scale = SCREEN_SIZE // grid_size
+    current_x = current_node[0] * scale
+    current_y = current_node[1] * scale
+    
+    if prime_state:
+        pg.draw.circle(SCREEN, WHITE, (current_x, current_y), scale // 4)  
+    pg.display.flip()
+
+
+def drawPrimeSpiral(previous_node, current_node, prime_state, grid_size):
     scale = SCREEN_SIZE // grid_size
     previous_x = previous_node[0] *  scale
     previous_y = previous_node[1] * scale
@@ -92,7 +109,7 @@ def drawPrimeGrid(previous_node, current_node, prime_state, grid_size):
     if prime_state:
         pg.draw.circle(SCREEN, WHITE, (current_x, current_y), scale // 4)  
     pg.display.flip()
-    
+
 
 def exit(run_state = True):
     """Exit pygame using esc or the close button"""
@@ -107,7 +124,6 @@ def exit(run_state = True):
     
 
 def main():
-    
     run_state = True
     clock = pg.time.Clock()
 
@@ -123,8 +139,12 @@ def main():
             run_state = exit()
             if not run_state:
                 break
+            
+            if TYPE.lower().strip() == "grid":
+                drawPrimeGrid(draw_coordinates[index], prime[index], GRID_SIZE)
+            elif TYPE.lower().strip() == "spiral":
+                drawPrimeSpiral(draw_coordinates[index-1], draw_coordinates[index], prime[index], GRID_SIZE)
 
-            drawPrimeGrid(draw_coordinates[index-1], draw_coordinates[index], prime[index], GRID_SIZE)
         if run_state:
             run_state = exit()
 
