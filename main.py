@@ -1,6 +1,11 @@
 import pygame as pg
 import numpy as np
 
+# To slow down the visualization a time.sleep() statement can be added 
+# where the input is in seconds.
+# import time
+# time.sleep() 
+
 TYPES = ["spiral","grid"]
 
 GRID_SIZE = int(input("Input a gride size. > "))
@@ -124,6 +129,8 @@ def exit(run_state = True):
     
 
 def main():
+    pg.init()
+
     run_state = True
     clock = pg.time.Clock()
 
@@ -147,8 +154,8 @@ def main():
 
         if run_state:
             run_state = exit()
+    
+    pg.quit()
 
 if __name__ == "__main__":
-    pg.init()
     main()
-    pg.quit()
